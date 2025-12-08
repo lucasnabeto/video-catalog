@@ -6,7 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record TvShowData(@JsonAlias("Title") String title,
                          @JsonAlias("totalSeasons") Integer totalSeasons,
-                         @JsonAlias("imdbRating") String rating) {
+                         @JsonAlias("imdbRating") String rating,
+                         @JsonAlias("Genre") String genre,
+                         @JsonAlias("Actors") String actors,
+                         @JsonAlias("Poster") String poster,
+                         @JsonAlias("Plot") String plot) {
 
     /* JsonAlias VS JsonProperty
      @JsonAlias e @JsonProperty são anotações em Jackson, uma biblioteca Java para processar JSON, que ajudam a mapear

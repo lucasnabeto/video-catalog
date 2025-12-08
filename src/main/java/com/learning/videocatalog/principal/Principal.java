@@ -1,9 +1,6 @@
 package com.learning.videocatalog.principal;
 
-import com.learning.videocatalog.model.Episode;
-import com.learning.videocatalog.model.TvShowData;
-import com.learning.videocatalog.model.TvShowEpisodeData;
-import com.learning.videocatalog.model.TvShowSeasonData;
+import com.learning.videocatalog.model.*;
 import com.learning.videocatalog.service.ConsumeAPI;
 import com.learning.videocatalog.service.ConvertData;
 import com.learning.videocatalog.service.ConvertDataImpl;
@@ -93,22 +90,32 @@ public class Principal {
         }
 
         var ratedEpisodesList = episodeList.stream()
-                .filter(e -> !e.getRating().equalsIgnoreCase("N/A")
-                        && (Double.parseDouble(e.getRating()) > 0.0))
+                .filter(e -> e.getRating() > 0.0)
                 .toList();
 
         Map<Integer, Double> seasonsRatings = ratedEpisodesList.stream()
                 .collect(Collectors.groupingBy(Episode::getSeason,
-                        Collectors.averagingDouble(e -> Double.parseDouble(e.getRating()))));
+                        Collectors.averagingDouble(Episode::getRating)));
         System.out.println("Ratings per season: " + seasonsRatings);
 
         DoubleSummaryStatistics stats = ratedEpisodesList.stream()
-                .collect(Collectors.summarizingDouble(e -> Double.parseDouble(e.getRating())));
+                .collect(Collectors.summarizingDouble(Episode::getRating));
         System.out.println("All statistics: " + stats);
         System.out.println("Average rating: " + stats.getAverage());
         System.out.println("Best episode: " + stats.getMax());
         System.out.println("Worst episode: " + stats.getMin());
 
         scanner.close();
+    }
+
+    private void listFilteredTvShows() {
+        List<TvShowData> tvShowData = new ArrayList<>();
+        List<TvShow> tvShows = new ArrayList<>();
+        tvShows = tvShowData.stream()
+                .map(TvShow::new)
+                .toList();
+        tvShows.stream()
+                .sorted(Comparator.comparing(TvShow::getGenre))
+                .forEach(System.out::println);
     }
 }

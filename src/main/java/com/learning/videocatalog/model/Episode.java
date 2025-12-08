@@ -7,14 +7,19 @@ public class Episode {
     private Integer season;
     private String title;
     private Integer episodeNumber;
-    private String rating;
+    private Double rating;
     private LocalDate releaseDate;
 
     public Episode(Integer season, TvShowEpisodeData tvShowEpisodeData) {
         this.season = season;
         this.title = tvShowEpisodeData.title();
         this.episodeNumber = tvShowEpisodeData.episodeNumber();
-        this.rating = tvShowEpisodeData.rating();
+
+        try {
+            this.rating = Double.valueOf(tvShowEpisodeData.rating());
+        } catch (NumberFormatException e) {
+            this.rating = 0.0;
+        }
 
         try {
             this.releaseDate = LocalDate.parse(tvShowEpisodeData.releaseDate());
@@ -47,12 +52,12 @@ public class Episode {
         this.episodeNumber = episodeNumber;
     }
 
-    public String getRating() {
+    public Double getRating() {
         return rating;
     }
 
     public void setRating(String rating) {
-        this.rating = rating;
+        this.rating = Double.valueOf(rating);
     }
 
     public LocalDate getReleaseDate() {
