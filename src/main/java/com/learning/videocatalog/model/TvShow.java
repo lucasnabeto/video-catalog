@@ -1,15 +1,39 @@
 package com.learning.videocatalog.model;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "tv_show")
 public class TvShow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "name", unique = true)
     private String title;
+
     private Integer totalSeasons;
+
     private Double rating;
+
+    @Enumerated(EnumType.STRING)
     private Genre genre;
+
     private String actors;
+
     private String poster;
+
     private String plot;
+
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Episode> episodes = new ArrayList<>();
+
+    public TvShow() {
+    }
 
     public TvShow(TvShowData tvShowData) {
         this.title = tvShowData.title();
@@ -30,6 +54,14 @@ public class TvShow {
                 ", actors='" + actors + '\'' +
                 ", poster='" + poster + '\'' +
                 ", plot='" + plot + '\'';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -86,5 +118,14 @@ public class TvShow {
 
     public void setPlot(String plot) {
         this.plot = plot;
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        episodes.forEach(episode -> episode.setTvShow(this));
+        this.episodes = episodes;
     }
 }

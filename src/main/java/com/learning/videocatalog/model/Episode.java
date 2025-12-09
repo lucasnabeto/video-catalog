@@ -1,14 +1,31 @@
 package com.learning.videocatalog.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+@Entity
 public class Episode {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Integer season;
+
     private String title;
+
     private Integer episodeNumber;
+
     private Double rating;
+
     private LocalDate releaseDate;
+
+    @ManyToOne
+    private TvShow tvShow;
+
+    public Episode() {
+    }
 
     public Episode(Integer season, TvShowEpisodeData tvShowEpisodeData) {
         this.season = season;
@@ -26,6 +43,14 @@ public class Episode {
         } catch (DateTimeParseException e) {
             this.releaseDate = null;
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getSeason() {
@@ -56,16 +81,24 @@ public class Episode {
         return rating;
     }
 
-    public void setRating(String rating) {
-        this.rating = Double.valueOf(rating);
-    }
-
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public TvShow getTvShow() {
+        return tvShow;
+    }
+
+    public void setTvShow(TvShow tvShow) {
+        this.tvShow = tvShow;
     }
 
     @Override

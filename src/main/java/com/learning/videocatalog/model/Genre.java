@@ -7,7 +7,7 @@ public enum Genre {
     COMEDY("Comedy"),
     CRIME("Crime");
 
-    private String genreOMDB;
+    private final String genreOMDB;
 
     Genre(String genreOMDB) {
         this.genreOMDB = genreOMDB;

@@ -31,7 +31,7 @@ src/main/java/com/learning/videocatalog/
 │   ├── TvShowData.java             # TV show information model
 │   ├── TvShowEpisodeData.java      # Episode details model
 │   └── TvShowSeasonData.java       # Season information model
-├── principal/
+├── consoleApplication/
 │   └── Principal.java              # Main application logic and user interaction
 └── service/
     ├── ConsumeAPI.java             # API consumption service
