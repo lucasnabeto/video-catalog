@@ -9,9 +9,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    show-sql: true
-#    format-sql: true
+#    show-sql: true #Enable to show generated SQL in the console
+#    format-sql: true #Enable to format SQL in the console
 hibernate:
   dialect: org.hibernate.dialect.HSQLDialect
 server:
   port: 8080
+#  error:
+#    include-stacktrace: never #Blocks stacktrace in error responses.
